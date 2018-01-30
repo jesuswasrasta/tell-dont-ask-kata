@@ -17,7 +17,6 @@ class OrderCreationUseCase(private val orderRepository: OrderRepository, private
     fun run(request: SellItemsRequest) {
         val order = Order()
         order.status = OrderStatus.CREATED
-        order.items = ArrayList()
         order.currency = "EUR"
         order.total = BigDecimal("0.00")
         order.tax = BigDecimal("0.00")
@@ -38,7 +37,7 @@ class OrderCreationUseCase(private val orderRepository: OrderRepository, private
                 orderItem.quantity = itemRequest.quantity
                 orderItem.tax = taxAmount
                 orderItem.taxedAmount = taxedAmount
-                order.items!!.add(orderItem)
+                order.addItem(orderItem)
 
                 order.total = order.total!!.add(taxedAmount)
                 order.tax = order.tax!!.add(taxAmount)
